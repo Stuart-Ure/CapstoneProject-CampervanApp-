@@ -1,7 +1,11 @@
 package com.codeclan.FinalProject.repositories;
 
-import com.codeclan.FinalProject.models.SustainabilityActions;
+import com.codeclan.FinalProject.models.SustainabilityAction;
+import com.codeclan.FinalProject.models.SustainabilityAction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SustainabilityActionsRepository extends JpaRepository <SustainabilityActions, Long> {
+import java.util.List;
+
+public interface SustainabilityActionsRepository extends JpaRepository <SustainabilityAction, Long> {
+    List<SustainabilityAction> findAll();
 }

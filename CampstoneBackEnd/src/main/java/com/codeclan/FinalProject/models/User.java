@@ -12,30 +12,37 @@ public class User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
     private String username;
-    private String password_hash;
-    private String profile_picture;
+    private String password;
+    private String profilePicture;
     private Long sustainability_points;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
 
-    public User(String username, String password_hash, String profile_picture, Long sustainability_points) {
+    @OneToMany(mappedBy = "user")
+    private List<SustainabilityAction> sustainabilityActions = new ArrayList<>();
+
+    public List<SustainabilityAction> getSustainabilityActions() {
+        return sustainabilityActions;
+    }
+
+    public User(String username, String password, String profilePicture, Long sustainability_points) {
         this.username = username;
-        this.password_hash = password_hash;
-        this.profile_picture = profile_picture;
+        this.password = password;
+        this.profilePicture = profilePicture;
         this.sustainability_points = sustainability_points;
     }
 
     public User(){}
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -46,21 +53,20 @@ public class User
         this.username = username;
     }
 
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-
-    public String getProfile_picture() {
-        return profile_picture;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public Long getSustainability_points() {
@@ -70,4 +76,5 @@ public class User
     public void setSustainability_points(Long sustainability_points) {
         this.sustainability_points = sustainability_points;
     }
+
 }

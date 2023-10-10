@@ -16,7 +16,7 @@ public class UserSustainabilityHistory {
     private Long action_id;
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

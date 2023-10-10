@@ -14,7 +14,7 @@ public class Destination {
     private Double longitude;
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id") // The name of the foreign key column in the destination table
     private Route route;
 

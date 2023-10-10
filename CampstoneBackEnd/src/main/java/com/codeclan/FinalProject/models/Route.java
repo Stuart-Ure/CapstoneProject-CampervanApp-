@@ -28,6 +28,8 @@ public class Route {
 
     public Route(){}
 
+
+
     public Long getRoute_id() {
         return route_id;
     }
@@ -51,5 +53,9 @@ public class Route {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Destination> getDestinations() {
+        return null;
     }
 }

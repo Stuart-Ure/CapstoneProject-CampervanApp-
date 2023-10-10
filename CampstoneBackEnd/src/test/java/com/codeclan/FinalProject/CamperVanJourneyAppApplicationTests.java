@@ -83,13 +83,13 @@ public void testCreateUser() {
 	userRepository.save(user);
 
 	// Retrieve the user from the repository
-	User retrievedUser = userRepository.findById(user.getUser_id()).orElse(null);
+	User retrievedUser = userRepository.findById(user.getUserId()).orElse(null);
 	assertNotNull(retrievedUser);
 
 	// Check if the user's properties match the expected values
 	assertEquals("Kepler", retrievedUser.getUsername());
-	assertEquals("Password", retrievedUser.getPassword_hash());
-	assertEquals("picture", retrievedUser.getProfile_picture());
+	assertEquals("Password", retrievedUser.getPassword());
+	assertEquals("picture", retrievedUser.getProfilePicture());
 	assertNull(retrievedUser.getSustainability_points());
 }
 
@@ -99,19 +99,19 @@ public void testCreateUser() {
 		userRepository.save(user);
 
 		// Retrieve the user from the repository
-		User retrievedUser = userRepository.findById(user.getUser_id()).orElse(null);
+		User retrievedUser = userRepository.findById(user.getUserId()).orElse(null);
 		assertNotNull(retrievedUser);
 
 		// Update user properties
-		retrievedUser.setProfile_picture("newPicture");
+		retrievedUser.setProfilePicture("newPicture");
 		userRepository.save(retrievedUser);
 
 		// Retrieve the user again
-		User updatedUser = userRepository.findById(user.getUser_id()).orElse(null);
+		User updatedUser = userRepository.findById(user.getUserId()).orElse(null);
 		assertNotNull(updatedUser);
 
 		// Check if the properties have been updated
-		assertEquals("newPicture", updatedUser.getProfile_picture());
+		assertEquals("newPicture", updatedUser.getProfilePicture());
 	}
 
 	@Test
@@ -120,10 +120,10 @@ public void testCreateUser() {
 		userRepository.save(user);
 
 		// Delete the user from the repository
-		userRepository.deleteById(user.getUser_id());
+		userRepository.deleteById(user.getUserId());
 
 		// Try to retrieve the user, it should be null after deletion
-		User deletedUser = userRepository.findById(user.getUser_id()).orElse(null);
+		User deletedUser = userRepository.findById(user.getUserId()).orElse(null);
 		assertNull(deletedUser);
 	}
 //DESTINATION..................................................................
