@@ -56,6 +56,6 @@ public class Route {
     }
 
     public List<Destination> getDestinations() {
-        return null;
+        return destinations;
     }
 }

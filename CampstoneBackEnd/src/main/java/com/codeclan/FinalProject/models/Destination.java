@@ -63,6 +63,11 @@ public class Destination {
         return description;
     }
 
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

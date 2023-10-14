@@ -64,4 +64,12 @@ public class DestinationController {
         destinationRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-}
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Destination>> searchDestinations(@RequestParam String query) {
+        List<Destination> searchResults = destinationRepository.findBySearchQuery(query);
+        return new ResponseEntity<>(searchResults, HttpStatus.OK);
+    }
+
+
+    }
