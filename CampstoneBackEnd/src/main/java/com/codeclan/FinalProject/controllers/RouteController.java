@@ -2,6 +2,7 @@ package com.codeclan.FinalProject.controllers;
 
 import com.codeclan.FinalProject.models.Destination;
 import com.codeclan.FinalProject.models.Route;
+import com.codeclan.FinalProject.models.User;
 import com.codeclan.FinalProject.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -58,4 +58,11 @@ public class Route {
     public List<Destination> getDestinations() {
         return destinations;
     }
+
+    public Long getUser_id() {
+        return null;
+    }
+
+    public void setUser(User userObject) {
+    }
 }
