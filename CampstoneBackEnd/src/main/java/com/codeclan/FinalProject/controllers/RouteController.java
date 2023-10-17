@@ -3,6 +3,7 @@ package com.codeclan.FinalProject.controllers;
 import com.codeclan.FinalProject.models.Destination;
 import com.codeclan.FinalProject.models.Route;
 import com.codeclan.FinalProject.models.User;
+import com.codeclan.FinalProject.repositories.DestinationRepository;
 import com.codeclan.FinalProject.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ public class RouteController {
 
     @Autowired
     RouteRepository routeRepository;
+    @Autowired
+    DestinationRepository destinationRepository;
 
     // GET all routes
     @GetMapping("/")
@@ -39,6 +42,26 @@ public class RouteController {
         Optional<Route> route = routeRepository.findById(id);
         return route.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // POST create a destination for a specific route
+    @PostMapping("/{id}/destinations")
+    public ResponseEntity<Destination> createDestinationForRoute(@PathVariable Long id, @RequestBody Destination destination) {
+        Optional<Route> routeOptional = routeRepository.findById(id);
+
+        if (routeOptional.isPresent()) {
+            Route route = routeOptional.get();
+
+            // Set the route for the new destination
+            destination.setRoute(route);
+
+            // Save the destination
+            destinationRepository.save(destination);
+
+            return new ResponseEntity<>(destination, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}/destinations")

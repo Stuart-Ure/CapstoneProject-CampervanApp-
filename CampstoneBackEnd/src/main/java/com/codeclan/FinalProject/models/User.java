@@ -1,6 +1,7 @@
 package com.codeclan.FinalProject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class User
     private String profilePicture;
     private Long sustainability_points;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
 
@@ -77,4 +79,7 @@ public class User
         this.sustainability_points = sustainability_points;
     }
 
+    public Long getSustainabilityPoints() {
+        return null;
+    }
 }

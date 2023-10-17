@@ -1,5 +1,8 @@
 package com.codeclan.FinalProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,35 +12,36 @@ import java.util.List;
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long route_id;
+    private Long id;
     private String name;
     private String description;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
-    private List<Destination> destinations = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "route")
+    private List<Destination> destinations;
 
-    public Route(Long route_id,  String name, String description) {
-        this.route_id = route_id;
+
+    public Route(Long id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
+        this.destinations = new ArrayList<>();
     }
 
     public Route(){}
 
-
-
-    public Long getRoute_id() {
-        return route_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setRoute_id(Long route_id) {
-        this.route_id = route_id;
+    public void setId(Long id) {
+        this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -55,14 +59,20 @@ public class Route {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public List<Destination> getDestinations() {
         return destinations;
     }
 
-    public Long getUser_id() {
-        return null;
-    }
 
-    public void setUser(User userObject) {
+    public void setDestinations(List<Destination> destinations) {
+        this.destinations = destinations;
     }
 }

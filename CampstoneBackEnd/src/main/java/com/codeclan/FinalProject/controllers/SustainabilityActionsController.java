@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api/sustainabilityActions")
@@ -25,22 +26,35 @@ public class SustainabilityActionsController {
         return new ResponseEntity<>(actions, HttpStatus.OK);
     }
 
-    @PostMapping("/addUserAction/{userId}/{actionId}")
-    public ResponseEntity<String> addUserAction(
-            @PathVariable Long userId,
-            @PathVariable Long actionId
-    ) {
+    @PostMapping("/addUserActions")
+    public ResponseEntity<String> addUserActions(@RequestBody Map<String, Object> requestData) {
+        Long userId = Long.valueOf(requestData.get("userId").toString());
+        List<Long> actionIds = (List<Long>) requestData.get("actionIds");
+
         Optional<User> userOptional = userRepository.findById(userId);
-        Optional<SustainabilityAction> actionOptional = sustainabilityActionsRepository.findById(actionId);
 
-        if (userOptional.isPresent() && actionOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            SustainabilityAction action = actionOptional.get();
 
-            user.getSustainabilityActions().add(action);
+            List<SustainabilityAction> selectedActions = sustainabilityActionsRepository.findAllById(actionIds);
+
+            user.getSustainabilityActions().addAll(selectedActions);
             userRepository.save(user);
 
-            return ResponseEntity.ok("Action added to user.");
+            return ResponseEntity.ok("Actions saved to the user.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/users/{userId}/sustainabilityPoints")
+    public ResponseEntity<Long> getSustainabilityPoints(@PathVariable Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Long sustainabilityPoints = user.getSustainabilityPoints();
+            return new ResponseEntity<>(sustainabilityPoints, HttpStatus.OK);
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -25,6 +25,8 @@ public class DestinationController {
     // POST create a destination
     @PostMapping("/destination")
     public ResponseEntity<Destination> createDestination(@RequestBody Destination destination) {
+        System.out.println(destination);
+        System.out.println("YEP HITTING THE RIGHT END POINT!!!!!!!!!!!!!!");
         destinationRepository.save(destination);
         return new ResponseEntity<>(destination, HttpStatus.OK);
     }
@@ -48,8 +50,6 @@ public class DestinationController {
             Destination destination = existingDestination.get();
             // Update destination properties here
             destination.setName(newDestination.getName());
-            destination.setLatitude(newDestination.getLatitude());
-            destination.setLongitude(newDestination.getLongitude());
             destination.setDescription(newDestination.getDescription());
             destinationRepository.save(destination);
             return new ResponseEntity<>(destination, HttpStatus.OK);

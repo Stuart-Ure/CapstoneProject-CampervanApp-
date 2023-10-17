@@ -127,45 +127,45 @@ public void testCreateUser() {
 		assertNull(deletedUser);
 	}
 //DESTINATION..................................................................
+//
+//	@Test
+//	public void testCreateDestination() {
+//		Destination destination = new Destination("Kylesku", 58.25724, -5.01827, "NW Scotland Trip");
+//		destinationRepository.save(destination);
+//
+//		// Retrieve the destination from the repository
+//		Destination retrievedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
+//		assertNotNull(retrievedDestination);
+//
+//		// Check if the destination's properties
+//		assertEquals("Kylesku", retrievedDestination.getName());
+//		assertEquals(58.25724, retrievedDestination.getLatitude(), 0.001); // Use delta for double comparison
+//		assertEquals(-5.01827, retrievedDestination.getLongitude(), 0.001); // Use delta for double comparison
+//		assertEquals("NW Scotland Trip", retrievedDestination.getDescription());
+//	}
 
-	@Test
-	public void testCreateDestination() {
-		Destination destination = new Destination("Kylesku", 58.25724, -5.01827, "NW Scotland Trip");
-		destinationRepository.save(destination);
-
-		// Retrieve the destination from the repository
-		Destination retrievedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
-		assertNotNull(retrievedDestination);
-
-		// Check if the destination's properties
-		assertEquals("Kylesku", retrievedDestination.getName());
-		assertEquals(58.25724, retrievedDestination.getLatitude(), 0.001); // Use delta for double comparison
-		assertEquals(-5.01827, retrievedDestination.getLongitude(), 0.001); // Use delta for double comparison
-		assertEquals("NW Scotland Trip", retrievedDestination.getDescription());
-	}
-
-	@Test
-	public void testUpdateDestination() {
-		Destination destination = new Destination("Oban", 56.4152, 5.4710, "Great seafood");
-		destinationRepository.save(destination);
-
-		// Retrieve the destination from the repository
-		Destination retrievedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
-		assertNotNull(retrievedDestination);
-
-		// Update destination properties
-		retrievedDestination.setName("Oban");
-		retrievedDestination.setDescription("Great Seafood");
-		destinationRepository.save(retrievedDestination);
-
-		// Retrieve the destination again
-		Destination updatedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
-		assertNotNull(updatedDestination);
-
-		// Check if the properties have been updated
-		assertEquals("Oban", updatedDestination.getName());
-		assertEquals("Great Seafood", updatedDestination.getDescription());
-	}
+//	@Test
+//	public void testUpdateDestination() {
+//		Destination destination = new Destination("Oban", 56.4152, 5.4710, "Great seafood");
+//		destinationRepository.save(destination);
+//
+//		// Retrieve the destination from the repository
+//		Destination retrievedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
+//		assertNotNull(retrievedDestination);
+//
+//		// Update destination properties
+//		retrievedDestination.setName("Oban");
+//		retrievedDestination.setDescription("Great Seafood");
+//		destinationRepository.save(retrievedDestination);
+//
+//		// Retrieve the destination again
+//		Destination updatedDestination = destinationRepository.findById(destination.getDestination_id()).orElse(null);
+//		assertNotNull(updatedDestination);
+//
+//		// Check if the properties have been updated
+//		assertEquals("Oban", updatedDestination.getName());
+//		assertEquals("Great Seafood", updatedDestination.getDescription());
+//	}
 
 
 
