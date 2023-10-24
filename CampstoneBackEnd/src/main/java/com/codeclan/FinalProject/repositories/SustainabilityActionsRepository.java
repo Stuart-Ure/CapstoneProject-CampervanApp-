@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface SustainabilityActionsRepository extends JpaRepository <SustainabilityAction, Long> {
     List<SustainabilityAction> findAll();
+
+    List<SustainabilityAction> findByValueIn(List<String> actionIds);
 }

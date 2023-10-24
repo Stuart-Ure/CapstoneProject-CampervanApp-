@@ -5,6 +5,7 @@ import com.codeclan.FinalProject.models.Route;
 import com.codeclan.FinalProject.models.User;
 import com.codeclan.FinalProject.repositories.DestinationRepository;
 import com.codeclan.FinalProject.repositories.RouteRepository;
+import com.codeclan.FinalProject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,30 @@ public class RouteController {
     @Autowired
     DestinationRepository destinationRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+
     // GET all routes
     @GetMapping("/")
     public ResponseEntity<List<Route>> getAllRoutes() {
         List<Route> routes = routeRepository.findAll();
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Route>> getRoutesByUserId(@PathVariable Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<Route> routes = routeRepository.findByUser(user);
+            return new ResponseEntity<>(routes, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     // POST create a route
     @PostMapping("/")
@@ -103,4 +122,26 @@ public class RouteController {
         routeRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+    // POST create a route for a specific user
+//    @PostMapping("/")
+//    public ResponseEntity<Route> createRouteForUser(@RequestBody Route route, @RequestParam("userId") Long userId) {
+//        Optional<User> userOptional = userRepository.findById(userId);
+//
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//
+//            // Set the user for the new route
+//            route.setUser(user);
+//
+//            // Save the route
+//            routeRepository.save(route);
+//
+//            return new ResponseEntity<>(route, HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
 }

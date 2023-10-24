@@ -20,25 +20,36 @@ public class SustainabilityActionsController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/")
+    // Step 1: Create an endpoint to fetch sustainability actions
+    @GetMapping("/api/sustainabilityActions")
     public ResponseEntity<List<SustainabilityAction>> getAllActions() {
         List<SustainabilityAction> actions = sustainabilityActionsRepository.findAll();
         return new ResponseEntity<>(actions, HttpStatus.OK);
     }
 
-    @PostMapping("/addUserActions")
+    // Step 2: Create an endpoint to save selected actions to a user's profile
+    @PostMapping("/api/sustainabilityActions/addUserActions")
     public ResponseEntity<String> addUserActions(@RequestBody Map<String, Object> requestData) {
         Long userId = Long.valueOf(requestData.get("userId").toString());
-        List<Long> actionIds = (List<Long>) requestData.get("actionIds");
+        List<String> actionIds = (List<String>) requestData.get("actionIds");
 
+        // Fetch the user from the database
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            List<SustainabilityAction> selectedActions = sustainabilityActionsRepository.findAllById(actionIds);
+            // Fetch the selected actions from the database based on actionIds
+            List<SustainabilityAction> selectedActions = sustainabilityActionsRepository
+                    .findByValueIn(actionIds);
 
+            // Implement the logic to associate selected actions with the user
             user.getSustainabilityActions().addAll(selectedActions);
+
+            // Update the user's sustainability points based on the selected actions
+            Long totalPoints = selectedActions.stream().mapToLong(SustainabilityAction::getPoints).sum();
+            user.setSustainabilityPoints(user.getSustainabilityPoints() + totalPoints);
+
             userRepository.save(user);
 
             return ResponseEntity.ok("Actions saved to the user.");
@@ -46,6 +57,9 @@ public class SustainabilityActionsController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
 
     @GetMapping("/users/{userId}/sustainabilityPoints")
     public ResponseEntity<Long> getSustainabilityPoints(@PathVariable Long userId) {

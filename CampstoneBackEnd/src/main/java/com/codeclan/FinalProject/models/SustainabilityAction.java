@@ -1,7 +1,11 @@
 package com.codeclan.FinalProject.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "sustainability_actions")
@@ -12,9 +16,9 @@ public class SustainabilityAction {
     private String name;
     private Long points;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JsonIgnoreProperties("sustainabilityActions")
+    @ManyToMany(mappedBy = "sustainabilityActions")
+    private List<User> users = new ArrayList<>();
 
     public SustainabilityAction(Long action_id, String name, Long points) {
         this.action_id = action_id;
@@ -49,6 +53,14 @@ public class SustainabilityAction {
 
     public void setPoints(Long points) {
         this.points = points;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

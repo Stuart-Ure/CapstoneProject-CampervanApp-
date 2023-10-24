@@ -23,7 +23,13 @@ public class User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("users")
+    @ManyToMany
+    @JoinTable(
+            name = "user_sustainability_action",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "action_id")
+    )
     private List<SustainabilityAction> sustainabilityActions = new ArrayList<>();
 
     public List<SustainabilityAction> getSustainabilityActions() {
@@ -82,4 +88,22 @@ public class User
     public Long getSustainabilityPoints() {
         return null;
     }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
+
+    public void setSustainabilityActions(List<SustainabilityAction> sustainabilityActions) {
+        this.sustainabilityActions = sustainabilityActions;
+    }
+
+    public void setSustainabilityPoints(long l) {
+    }
+    public void getSustainabilityPoints(long l) {
+    }
+
 }
